@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .oul{
+        width: 300px;
+        height: 280px;
+        border: 1px solid black;
+        margin: 100px auto;
+        position: relative;
+    }
+    .oul li {
+        width: 300px;
+        height: 40px;
+        background-color: orange;
+        border: 1px solid red;
+        box-sizing: border-box;
+        text-align: center;
+        line-height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <ul class="oul">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+      <li>7</li>
+  </ul>
+  <script src="jquery-3.2.1.js" charset="utf-8"></script>
+  <script>
+    $.fn.draggable = function(){
+        var that;
+        var y;
+      for (var i = 0; i < this.length; i++) {
+        this[i].onmousedown = function(event){
+          event = event || window.event;
+          that = this;
+          var deltaX = event.clientX - this.offsetLeft;
+          var deltaY = event.clientY - this.offsetTop;
+          this.style.position = 'absolute';
+          document.onmousemove = event => {
+            event = event || window.event;
+            y =  event.clientY - deltaY;
+            this.style.top = event.clientY - deltaY + 'px';
+            this.style.left = event.clientX - deltaX + 'px';
+            //console.log(this);
+          }
+        }
+        document.onmouseup = event => {
+          event = event || window.event;
+          //console.log(that);
+          document.onmousemove = that.style.left = 0;
+          if(y <= 20){
+            document.onmousemove = that.style.top = 0;
+          }else if(y > 20 && y <= 60){
+            document.onmousemove = that.style.top = 40 + 'px';
+          }else if(y > 60 && y <= 100){
+            document.onmousemove = that.style.top = 80 + 'px';
+          }else if(y > 100 && y <= 140){
+            document.onmousemove = that.style.top = 120 + 'px';
+          }else if(y > 140 && y <= 180){
+            document.onmousemove = that.style.top = 160 + 'px';
+          }else if(y >= 180 && y <= 220){
+            document.onmousemove = that.style.top = 200 + 'px';
+          }else if(y >= 220 && y <= 260){
+            document.onmousemove = that.style.top = 240 + 'px';
+          }else if(y > 260){
+            document.onmousemove = that.style.top = 240 + 'px';
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+    $('.oul li').draggable();
+  </script>
+</body>
+</html>
